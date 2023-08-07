@@ -33,7 +33,7 @@ namespace testeEsig.Views
                                       "FROM Pessoa " +
                                       "INNER JOIN Cargo ON Pessoa.CARGO_ID = Cargo.ID " +
                                       "LEFT JOIN Pessoa_Salario ON Pessoa.ID = Pessoa_Salario.Pessoa_ID " +
-                                      "ORDER BY Pessoa.ID ASC";
+                                      "ORDER BY Pessoa.Nome ASC";
 
                     using (OracleCommand command = new OracleCommand(sqlQuery, connection))
                     {
@@ -49,7 +49,8 @@ namespace testeEsig.Views
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine("caiu aqui");
+                    string errorMessage = ex.Message.Replace("'", "\\'");
+                    ExibeModalError(errorMessage);
                 }
             }
         }
@@ -69,26 +70,38 @@ namespace testeEsig.Views
                 try
                 {
                     connection.Open();
-
-                    // Chame a procedure aqui usando OracleCommand
                     using (OracleCommand command = new OracleCommand("calcular_salarios", connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
-                        // Defina os parâmetros da sua procedure, se houver
-
-                        // Execute a procedure
                         command.ExecuteNonQuery();
                     }
 
-                    // Após executar a procedure, atualize os dados na ListView chamando o método BindListView
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "showSuccessModal", "$('#successModal').modal('show');", true);
                     BindListView();
+                    ExibeModalSucesso();
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine("Erro ao calcular/recalcular salários: " + ex.Message);
+                    string errorMessage = ex.Message.Replace("'", "\\'");
+                    ExibeModalError(errorMessage);
                 }
             }
+        }
+
+        protected void ExibeModalSucesso()
+        {
+            string script = @"
+                    <script>
+                        Swal.fire('Sucesso!', 'Salários Calculados/Recalculados com sucesso!', 'success');
+                    </script>";
+            ClientScript.RegisterStartupScript(this.GetType(), "alert", script, false);
+        }
+        protected void ExibeModalError(string errorMessage)
+        {
+            string script = $@"
+                        <script>
+                            Swal.fire('Erro!', '{errorMessage}', 'error');
+                        </script>";
+            ClientScript.RegisterStartupScript(this.GetType(), "alert", script, false);
         }
     }
 }
