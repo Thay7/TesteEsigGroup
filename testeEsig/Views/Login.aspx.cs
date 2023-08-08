@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Oracle.ManagedDataAccess.Client;
 
 namespace testeEsig.Views
 {
@@ -18,18 +19,46 @@ namespace testeEsig.Views
             string username = txtUsername.Text;
             string password = txtPassword.Text;
 
-            if (username == "user" && password == "password")
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString;
+            using (OracleConnection connection = new OracleConnection(connectionString))
             {
-                Response.Redirect("Listagem.aspx");
-            }
-            else
-            {
+                try
+                {
+                    connection.Open();
+                    string sqlQuery = "SELECT COUNT(*) FROM Usuarios WHERE Usuario = :Username AND Senha = :Password";
+
+                    using (OracleCommand command = new OracleCommand(sqlQuery, connection))
+                    {
+                        command.Parameters.Add(":Username", OracleDbType.Varchar2).Value = username;
+                        command.Parameters.Add(":Password", OracleDbType.Varchar2).Value = password;
+
+                        int count = Convert.ToInt32(command.ExecuteScalar());
+                        if (count > 0)
+                        {
+                            Response.Redirect("Listagem.aspx");
+                        }
+                        else
+                        {
+                            string script = $@"
+                                    <script>
+                                        Swal.fire('Erro!', 'Usuário ou senha incorretos!', 'error');
+                                    </script>";
+                            ClientScript.RegisterStartupScript(this.GetType(), "alert", script, false);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    string errorMessage = ex.Message.Replace("'", "\\'");
                     string script = $@"
                         <script>
-                            Swal.fire('Erro!', 'Usuário ou senha incorretos!', 'error');
+                            Swal.fire('Erro!', '{errorMessage}', 'error');
                         </script>";
                     ClientScript.RegisterStartupScript(this.GetType(), "alert", script, false);
+                }
             }
         }
+
+
     }
 }
