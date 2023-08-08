@@ -1,6 +1,9 @@
 # Listagem de Pessoas - Teste Esig Group.
 
 ### Projeto desenvolvido utilizando as tecnologias: Asp.Net Web Forms, Banco de Dados Oracle, Bootstrap e SweetAlert2. 
+
+O sistema consiste em uma tela de login, que ao entrar no sistema apresenta uma listagem de pessoas com seus respectivos dados, uma coluna cargo e uma coluna salário, que por sua vez será calculada seguindo as orientações do teste, por uma procedure no banco de dados. 
+
 ### Para rodar o projeto localmente em sua máquina, por favor, siga as seguintes instruções:
 
 ### Instale os Softwares
