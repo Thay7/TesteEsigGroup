@@ -14,6 +14,7 @@
 - `Crie as seguintes tabelas: Pessoa, Cargo, Vencimentos, Cargo_Vencimentos;`
 - `Importe para as tabelas seus respectivos dados;`
 - `Crie uma outra tabela Pessoa_Salario, ela será populada pela Procedure calcula_salarios;`
+- `Crie uma tabela Usuarios com os campos: ID, NOME, USUARIO, SENHA e a popule com pelo menos um usuario para que possa realizar o login`;
 
 Para executar o projeto, clone-o e certifique-se de configurar a string de conexão ao banco de dados Oracle no arquivo de configuração.
 Por fim, compile o projeto no Visual Studio.
