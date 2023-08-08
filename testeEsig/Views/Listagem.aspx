@@ -14,14 +14,25 @@
         <script src="~/Scripts/sweetalert2.all.min.js"></script>
     </head>
     <body>
-        <div class="m-5">
-            <div style="display: flex; flex-direction: row; justify-content: space-between;">
-                <h3>Listagem de Pessoas</h3>
-                <asp:LinkButton ID="lkCalculaRecalculaSalario" runat="server" CssClass="btn btn-primary btn-rad btn-trans"
+        <div class="m-4">
+            <div style="display: flex; flex-direction: row; justify-content: space-between; margin-bottom: 10px;">
+                <h4></h4>
+                <asp:LinkButton ID="LinkButton1" runat="server" CssClass="btn btn-danger btn-rad btn-trans"
                     CommandName='<%# Bind("ID") %>' CommandArgument='<%# Bind("ID") %>'
-                    data-placement="top" data-toggle="tooltip" OnClick="lkCalculaRecalculaSalario_Click" data-original-title="Calcular/Recalcular Salario" 
-                    Text='<i class="fa fa-calculator" style="font-size: 15px; margin-right: 5px;"></i> Calcular/Recalcular Salários'>
+                    data-placement="top" data-toggle="tooltip" OnClick="lkSair_Click" data-original-title="Sair"
+                    Text='Sair'>
                 </asp:LinkButton>
+            </div>
+            <hr />
+            <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                <h4>Listagem de Pessoas</h4>
+                <div>
+                    <asp:LinkButton ID="lkCalculaRecalculaSalario" runat="server" CssClass="btn btn-primary btn-rad btn-trans"
+                        CommandName='<%# Bind("ID") %>' CommandArgument='<%# Bind("ID") %>'
+                        data-placement="top" data-toggle="tooltip" OnClick="lkCalculaRecalculaSalario_Click" data-original-title="Calcular/Recalcular Salario"
+                        Text='<i class="fa fa-calculator" style="font-size: 15px; margin-right: 5px;"></i> Calcular/Recalcular Salários'>
+                    </asp:LinkButton>
+                </div>
             </div>
             <asp:ListView ID="listViewDados" runat="server" ItemType="System.Data.DataRowView" DataKeyNames="ID"
                 OnPagePropertiesChanging="listViewDados_PagePropertiesChanging">
@@ -64,13 +75,13 @@
                     </tr>
                 </ItemTemplate>
             </asp:ListView>
-            <asp:DataPager ID="dataPagerDados" runat="server" PagedControlID="listViewDados" PageSize="10">
+            <asp:DataPager ID="dataPagerDados" runat="server" PagedControlID="listViewDados" PageSize="7">
                 <Fields>
                     <asp:NumericPagerField ButtonCount="5" />
                 </Fields>
             </asp:DataPager>
+            <hr />
         </div>
-        <!-- Adicione mais linhas aqui, se necessário -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     </body>
     </html>

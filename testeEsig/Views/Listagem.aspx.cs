@@ -87,6 +87,11 @@ namespace testeEsig.Views
             }
         }
 
+        protected void lkSair_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Login.aspx");
+        }
+
         protected void ExibeModalSucesso()
         {
             string script = @"
